@@ -1,0 +1,132 @@
+<html>
+    <h1><i>Order Book </i></h1>
+    <body>
+        <div>
+    <h3> depositToken</h3>
+    <form>
+        <label for="address">_token:</label>
+        <input type="text" id="address" name="address"><br><br>
+        <label for="uint256">_amount:</label>
+        <input type="text" id="uint256" name="uint256"><br><br>
+        <input type="submit" value="transact">
+    </form>
+    <h3> withdrawEth </h3>
+    <form>
+        <label for="uint256">_wei:</label>
+        <input type="text" id="uint256" name="uint256"><br><br> 
+        <input type="submit" value="transact">
+
+    </form>
+    <h3> withdrawToken </h3>
+    <form>
+        <label for="address">_token:</label>
+        <input type="text" id="address" name="address"><br><br>
+        <label for="uint256">_amount:</label>
+        <input type="text" id="uint256" name="uint256"><br><br>
+        <input type="submit" value="transact">
+
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+
+<script>
+    var contract;
+
+    $(document).ready(function()
+    {
+        web3 = new Web3(web3.currentProvider);
+
+
+        var address = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+        var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "tokenOwner",
+				"type": "address"
+			},
+			{
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+
+
+
+        contract = new web3.eth.Contract(abi, address);
+        
+        contract.methods.allowance().call().then(function(allowance)
+        {
+            $('#allowance').html(allowance);
+
+        })
+    })
+</script>
+</body>
+</html>
